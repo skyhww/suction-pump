@@ -122,6 +122,7 @@ func (entry *Entry) Validate(value string) error {
 			return err
 		}
 	}
+	return nil
 }
 
 type PageInput struct {
