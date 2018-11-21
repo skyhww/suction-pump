@@ -15,6 +15,10 @@ func NewValidatorError(field, reason string) error {
 	return &ValidatorError{field, reason}
 }
 
-type Validator interface {
-	Validate() ValidatorError
+type FieldValidator interface {
+	Validate(str string) *ValidatorError
+}
+
+type RowValidator interface {
+	Validate(row map[string]string) *ValidatorError
 }

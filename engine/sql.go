@@ -2,6 +2,10 @@ package engine
 
 import "github.com/jmoiron/sqlx"
 
+type SqlOptimization interface {
+	optimize(sql string) string
+}
+
 //sql分页包装器
 type PageSqlWrapper interface {
 	Wrapper(sql string) string
@@ -10,9 +14,10 @@ type PageSqlWrapper interface {
 }
 
 type NamedSqlEngine struct {
-	template Template
-	db       *sqlx.DB
-	text     string
+	template     Template
+	db           *sqlx.DB
+	text         string
+	optimization SqlOptimization
 }
 
 func (namedSqlEngine *NamedSqlEngine) ExecutePage(param map[string]string, pageSize, pageNo int) (*Page, error) {

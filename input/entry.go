@@ -12,6 +12,7 @@ type Input struct {
 	//名称
 	name string
 	id   int
+	path string
 	//输入对象
 	entry *[]Entry
 	//负责创建以及维护Input
@@ -83,6 +84,9 @@ func (input *Input) unInstall() error {
 func (input *Input) GetName() string {
 	return input.name
 }
+func (input *Input) GetPath() string {
+	return input.path
+}
 func (input *Input) GetId() int {
 	return input.id
 }
@@ -98,7 +102,7 @@ type Entry struct {
 	name      string
 	array     bool
 	required  bool
-	validator []Validator
+	validator []FieldValidator
 }
 
 func (entry *Entry) GetName() string {
@@ -110,6 +114,14 @@ func (entry *Entry) isArray() bool {
 }
 func (entry *Entry) isRequired() bool {
 	return entry.required
+}
+func (entry *Entry) Validate(value string) error {
+	for _, validator := range entry.validator {
+		err := validator.Validate(value)
+		if err != nil {
+			return err
+		}
+	}
 }
 
 type PageInput struct {

@@ -6,12 +6,13 @@ import (
 )
 
 type Bond struct {
-	input.Input
-	output.Output
+	in    input.Input
+	out   output.Output
 	param map[string]string
-	Validator
 }
 
-func (bond *Bond) Validate() {
-
+func (bond *Bond) Validate() error {
+	for _,enrty:=range bond.in.GetEntry(){
+		enrty.GetName()
+	}
 }
